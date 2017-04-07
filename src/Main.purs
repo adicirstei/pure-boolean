@@ -12,6 +12,12 @@ redditUri = "https://www.reddit.com/r/purescript.json"
 --redditReq = Client.requestFromURI redditUri \response -> void
 
 
+callback :: forall e. Client.Response -> Eff ( http :: HTTP | e) Unit
+callback res = pure
+
+req :: forall t2. (Client.Response -> Eff ( http :: HTTP | t2) Unit)
+  -> Eff ( http :: HTTP | t2 ) Client.Request
+req = Client.requestFromURI redditUri
 
 
 main :: forall e. Eff (console :: CONSOLE, http :: HTTP | e) Unit
