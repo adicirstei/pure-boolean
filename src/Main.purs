@@ -3,7 +3,7 @@ module Main where
 import Prelude
 import HTTP.Request
 import Node.Process as Proc
-import Control.Monad.Aff (Aff, launchAff, makeAff, runAff)
+import Control.Monad.Aff (Aff, Canceler, launchAff, makeAff, runAff)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Console (CONSOLE, log)
@@ -25,8 +25,9 @@ redditAff = makeAff $ httpGet redditUri
 
 
 
-
--- main :: forall e. Eff (console :: CONSOLE, process :: Proc.PROCESS, ajax :: AJAX, exception :: EXCEPTION | e) 
+main :: forall e.                 
+  Eff ( exception :: EXCEPTION, ajax :: AJAX, console :: CONSOLE | e )                       
+      ( Canceler ( ajax :: AJAX, console :: CONSOLE | e ) )
 main = 
   launchAff $ do
     -- args <- Proc.argv
