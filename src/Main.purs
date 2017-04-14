@@ -7,15 +7,13 @@ import Control.Monad.Aff (Aff, Canceler, launchAff, makeAff, runAff)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Eff.Exception (EXCEPTION, Error)
-import Data.Array (drop, intersect)
-
-redditUri :: String
-redditUri = "https://www.reddit.com/r/purescript.json"
+import Control.Monad.Eff.Exception (EXCEPTION)
+--import Data.Array (drop, intersect)
+import Node.Process (PROCESS)
 
 
 redditAff :: forall e. Aff ( ajax :: AJAX | e) String
-redditAff = makeAff $ httpGet redditUri
+redditAff = makeAff $ httpGet "https://www.reddit.com/r/purescript.json"
 
 --
 -- callback :: forall e. Client.Response -> Eff ( http :: HTTP | e) Unit
@@ -26,20 +24,16 @@ redditAff = makeAff $ httpGet redditUri
 
 
 main :: forall e.                 
-  Eff ( exception :: EXCEPTION, ajax :: AJAX, console :: CONSOLE | e )                       
-      ( Canceler ( ajax :: AJAX, console :: CONSOLE | e ) )
+  Eff ( exception :: EXCEPTION, ajax :: AJAX, console :: CONSOLE, process :: PROCESS | e )                       
+      ( Canceler ( ajax :: AJAX, console :: CONSOLE, process :: PROCESS | e ) )
 main = 
   launchAff $ do
-    -- args <- Proc.argv
+    
     redStr <- redditAff
-    liftEff $ log redStr
-    -- liftEff $ log $ show args
-    -- log $ show args
-    -- log $ show redStr
-
-
-
-
+    liftEff $ do 
+      args <- Proc.argv
+      log redStr
+      log $ show args
 
 
 
