@@ -15,13 +15,6 @@ import Node.Process (PROCESS)
 redditAff :: forall e. Aff ( ajax :: AJAX | e) String
 redditAff = makeAff $ httpGet "https://www.reddit.com/r/purescript.json"
 
---
--- callback :: forall e. Client.Response -> Eff ( http :: HTTP | e) Unit
--- callback res =
-
-
-
-
 
 main :: forall e.                 
   Eff ( exception :: EXCEPTION, ajax :: AJAX, console :: CONSOLE, process :: PROCESS | e )                       
@@ -37,17 +30,4 @@ main =
 
 
 
-
--- main =
---   bind 
---     Proc.argv
---     (\args -> 
---       discard 
---         (log "Here comes the aguments") 
---         (\_ -> log $ show args)
-    
---     )
-    
-
-  
 
