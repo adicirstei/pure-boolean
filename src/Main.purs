@@ -22,6 +22,7 @@ names =
   Proc.argv 
   <#> drop 2
 
+<<<<<<< HEAD
 
 related :: forall e. String -> Aff ( ajax :: AJAX, console :: CONSOLE | e) (Array String)
 related name = do
@@ -43,13 +44,28 @@ intersection (x : y : xss) = intersection ((intersect x y) : xss)
 
 
 
+=======
+>>>>>>> b3fa5d42d4649afc5e953ad9a0b75291ca93ff54
 
 main :: forall e.                 
   Eff ( exception :: EXCEPTION, ajax :: AJAX, console :: CONSOLE, process :: PROCESS | e )                       
       ( Canceler ( ajax :: AJAX, console :: CONSOLE, process :: PROCESS | e ) )
 main = 
   launchAff $ do
+<<<<<<< HEAD
     names <- liftEff names
     rels <- traverse related names
     --suggestions <- foldMap int
     liftEff $ log $ show (intersection $ fromFoldable rels)
+=======
+    
+    redStr <- redditAff
+    liftEff $ do 
+      args <- Proc.argv
+      log redStr
+      log $ show args
+
+
+
+
+>>>>>>> b3fa5d42d4649afc5e953ad9a0b75291ca93ff54
